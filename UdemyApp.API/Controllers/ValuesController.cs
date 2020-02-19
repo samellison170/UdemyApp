@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UdemyApp.API.Data;
@@ -9,6 +10,7 @@ using UdemyApp.API.Data;
 namespace UdemyApp.API.Controllers
 {
     //http"//localhost:5000/api/values
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase
@@ -19,7 +21,7 @@ namespace UdemyApp.API.Controllers
             _context = context;
         }
         // GET api/values
-        [HttpGet]
+    [HttpGet]
         public async Task<IActionResult> GetValues()
         {
             var values = await _context.Values.ToListAsync();
@@ -28,6 +30,7 @@ namespace UdemyApp.API.Controllers
         }
 
         // GET api/values/5
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetValue(int id)
         {
